@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApiLinq", "BlogApiLinq.csproj", "{091BFFEE-708C-6EC8-B20B-22374DBCE0DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{091BFFEE-708C-6EC8-B20B-22374DBCE0DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091BFFEE-708C-6EC8-B20B-22374DBCE0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091BFFEE-708C-6EC8-B20B-22374DBCE0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091BFFEE-708C-6EC8-B20B-22374DBCE0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC25170B-9592-416B-838F-1CE50B5C4638}
+	EndGlobalSection
+EndGlobal
