@@ -107,5 +107,128 @@ namespace BlogApiLinq.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("GetAllCategoriesWithTheirPosts")]
+        public IActionResult GetAllCategoriesWithTheirPosts()
+        {
+            var result = from category in _context.Categories
+                         join post in _context.Posts
+                         on category.Id equals post.CategoryId into postGroup
+                         from post in postGroup.DefaultIfEmpty()
+                         select new
+                         {
+                             CategroyName = category.Name,
+                             PostTitle = post != null ? post.Title : string.Empty,
+                         };
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllPostsWithTheirTags")]
+        public IActionResult GetAllPostsWithTheirTags()
+        {
+            var result = from post in _context.Posts
+                         join postTag in _context.PostTags
+                         on post.Id equals postTag.PostId
+                         join tag in _context.Tags
+                         on postTag.TagId equals tag.Id
+                         select new
+                         {
+                             post.Title,
+                             TagName = tag.Name
+                         };
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetTheMostCommentedPost")]
+        public IActionResult GetTheMostCommentedPost()
+        {
+            var result = (from comment in _context.Comments
+                          group comment by comment.PostId into grouped
+                          orderby grouped.Count() descending
+                          select new
+                          {
+                              PostId = grouped.Key,
+                              CommentCount = grouped.Count(),
+                          }).FirstOrDefault();
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllPostsThatHageNoTags")]
+        public IActionResult GetAllPostsThatHageNoTags()
+        {
+            var result = from post in _context.Posts
+                         join postTag in _context.PostTags
+                         on post.Id equals postTag.PostId into postTags
+                         from postTag in postTags.DefaultIfEmpty()
+                         where postTag == null
+                         select post;
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllPostsWithThierTags")]
+        public IActionResult GetAllPostsWithThierTags()
+        {
+            var result = from post in _context.Posts
+                         join postTag in _context.PostTags
+                         on post.Id equals postTag.PostId into postTags
+                         from postTag in postTags.DefaultIfEmpty()
+                         join tag in _context.Tags
+                         on postTag.TagId equals tag.Id into tags
+                         from tag in tags.DefaultIfEmpty()
+                         select new
+                         {
+                             post.Title,
+                             TagName = tag != null ? tag.Name : string.Empty,
+                         };
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetTheAverageNumberOfCommentsPerPosts")]
+        public IActionResult GetTheAverageNumberOfCommentsPerPosts()
+        {
+            var result = (from comment in _context.Comments
+                          group comment by comment.PostId into grouped
+                          select grouped.Count()).Average();
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllCategoriesAndNumberOfPostsInEach")]
+        public IActionResult GetAllCategoriesAndNumberOfPostsInEach()
+        {
+            var result = from category in _context.Categories
+                         join post in _context.Posts
+                         on category.Id equals post.CategoryId into posts
+                         select new
+                         {
+                             CategoryName = category.Name,
+                             PostCount = posts.Count(),
+                         };
+
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetPostsWithTheirTotalCommentOrderByTheMostCommented")]
+        public IActionResult GetPostsWithTheirTotalCommentOrderByTheMostCommented()
+        {
+            var postsByCommentCount = from post in _context.Posts
+                         join comment in _context.Comments
+                         on post.Id equals comment.PostId into comments
+                         select new
+                         {
+                             post.Title,
+                             CommentCount = comments.Count(),
+                         } into result
+                         orderby result.CommentCount descending
+                         select result;
+
+            return Ok(postsByCommentCount);
+        }
     }
 }
